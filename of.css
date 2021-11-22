@@ -44,8 +44,9 @@ table#menu-pozos{
     border: black
     width:100%
 
+
 }
-div#primera-columna,
+primera-columna,
 div#tercera-columna {
     border: 1px solid grey;
     background: #A4CE4E;
