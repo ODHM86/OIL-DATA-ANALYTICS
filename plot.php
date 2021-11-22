@@ -64,22 +64,26 @@ var chart = new CanvasJS.Chart("chartContainer", {
 
     echo $script1;
 	$fichero=fopen(FILE_NAME, 'r') or die ('Error de apertura');
-	$i=0;
+	
+	$j=0;
 	while (!feof($fichero)){
+	
 	$buffer=fgetcsv($fichero,4095,",");
 	$count=count($buffer);
 	$count_m=$count-1;
 //            if ($buffer[$i]<=$count_m){
-	 
+		if($j>0){
 //	  for ($j = 0; $j < $count; $j++){
-		$d = strtotime($buffer[0]);
-//		echo "value",$d->format('Y');
-		echo "{ x: new Date(",date('Y,m,d',$d),"), y:",$buffer[1],"},
-			";
+	$d = strtotime($buffer[0]);
+	//		echo "value",$d->format('Y');
+			echo "{ x: new Date(",date('Y,m,d',$d),"), y:",$buffer[1],"},
+				";
+				$j=$j+1;
+		 }
+		 else{
+			$j=$j+1;
+		 }
 		
-//	  }
-	  
-	  $i=$i+1;
 //            }
   }
 
@@ -112,22 +116,26 @@ var chart = new CanvasJS.Chart("chartContainer", {
 
 		echo $script2;
 		$fichero=fopen(FILE_NAME, 'r') or die ('Error de apertura');
-		$i=0;
+	
+		$j=0;
 		while (!feof($fichero)){
+		
 		$buffer=fgetcsv($fichero,4095,",");
 		$count=count($buffer);
 		$count_m=$count-1;
 	//            if ($buffer[$i]<=$count_m){
-		 
+			if($j>0){
 	//	  for ($j = 0; $j < $count; $j++){
-			$d = strtotime($buffer[0]);
-	//		echo "value",$d->format('Y');
-			echo "{ x: new Date(",date('Y,m,d',$d),"), y:",$buffer[2],"},
-				";
+		$d = strtotime($buffer[0]);
+		//		echo "value",$d->format('Y');
+				echo "{ x: new Date(",date('Y,m,d',$d),"), y:",$buffer[2],"},
+					";
+					$j=$j+1;
+			 }
+			 else{
+				$j=$j+1;
+			 }
 			
-	//	  }
-		  
-		  $i=$i+1;
 	//            }
 	  }
 
