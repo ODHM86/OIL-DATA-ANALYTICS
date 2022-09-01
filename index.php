@@ -4,6 +4,7 @@
     
     <title>Digital Oil Field</title>
     <link rel="stylesheet" type="text/css" href="of.css" />
+
   </head>
 
   <body id="body">
@@ -14,31 +15,23 @@
   <div id="encabezamiento">
   <center><a id='seccion' href='index.php?seccion=1'>INICIO</a>
        <a id='seccion' href='index.php?seccion=2'>DATA</a>
-       <a id='seccion' href='index.php?seccion=3'>PLOTS</a>
+       <a id='seccion' href='plot.php'>PLOTS</a>
        <a id='seccion' href='index.php?seccion=4'>DASHBOARD</a>
        <a id='seccion' href='index.php?seccion=5'>LOGS</a>
+       <a id='seccion' href='ipr.php'>IPR</a>
     </center></div>
-  </div>
+  
 
   <div id="contenedor">
   <div id="contenido">
     <div id="primera-columna">
-     <table id="menu-pozos">
-     <td>Menu de pozos</td>
-     </table>
+     Menu de pozos
     </div>
-    
-    
     <div id="contenido-interior">
-     <table>
-     <td>
      {Data/Plots/IPR/Map/logs(well logs, production logs, characterization logs, pressure build ups, drawdowns)/import/export/Inputs/petrophysical sections//plugins(field devices: pressure gauges, artificial lift sensors, flow meters, temperature meters.//report system (file creation)}
-     </td>
-     </table>
-    
     </div>
     <div id="contenido-interior-seccion">
-      contenido sección </br>
+      </br><h1>Data</h1> </br>
       Sube el archivo *.csv o *.xls
       <form name="archivo" enctype="multipart/form-data"
         action="archivo.php" method="post">
@@ -46,6 +39,8 @@
         <input type="file" name="archivo" />
         <input type="submit" value="Enviar" />
         </form>
+        </br>
+        <center><a id='seccion' href='oil_prod_total_fecha_short.csv'>Download example.csv</a></center>
 
       <?php
       if(isset($_GET['FILE_NAME'])) { $FILE_NAME=$_GET['FILE_NAME'];
@@ -56,14 +51,29 @@
             }
       if(isset($_GET['feedback_file'])) { $feedback_file=$_GET['feedback_file'];
           echo "Flag:", $feedback_file,"</br>";
-          echo "<table>";
+          echo '<center><table id="oil">';
           define('FILE_NAME',$FILE_NAME);
           $fichero=fopen(FILE_NAME, 'r') or die ('Error de apertura');
 //          $fichero_slice=fread($fichero,50);
           
 //          echo "</br>Recursive",count($buffer),"</br>";
-         
+
 //          echo "Count:",$count;
+
+
+
+          echo "<form action='plot.php'>";
+          echo "<input type='hidden' name='fichero' value=$fichero>";
+          echo "<input type='hidden' name='FILE_NAME' value=$FILE_NAME>";
+          echo "<input type='hidden' name='err_file' value=$err_file>";
+          
+          // echo "<input type='hidden' name='buffer' value=$buffer>";
+          echo "<input type='submit' value='Plot'>";
+          echo "</form>";
+
+
+
+
           $i=0;
             while (!feof($fichero)){
             $buffer=fgetcsv($fichero,4095,",");
@@ -73,15 +83,27 @@
               echo "<tr>";
               for ($j = 0; $j < $count; $j++){
                 echo "<td>",$buffer[$j],"</td>";
+                
               }
               echo "</tr>";
               $i=$i+1;
 //            }
           }
+          echo "</table></center>";
+          echo "<form action='plot.php'>";
+          echo "<input type='hidden' name='fichero' value=$fichero>";
+          echo "<input type='hidden' name='FILE_NAME' value=$FILE_NAME>";
+          echo "<input type='hidden' name='err_file' value=$err_file>";
+          
+          // echo "<input type='hidden' name='buffer' value=$buffer>";
+          echo "<input type='submit' value='Plot'>";
+          echo "</form>";
+         
                   }
       ?>
     </div>
     
+  </div>
   </div>
   </body>
 </html>
